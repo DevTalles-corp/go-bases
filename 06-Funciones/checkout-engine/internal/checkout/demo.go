@@ -23,4 +23,15 @@ func RunDemo() {
 	PrintKV("Subtotal: ", sub)
 	PrintKV("Cantidad: ", qty)
 
+	PrintDivider()
+
+	TryChangeCustomerByValue(order, "Nuevo nombre")
+	PrintKV("Customer no cambia: ", order.Customer)
+
+	ChangeCustomerByPointer(&order, "Andrei Cuéllar")
+	PrintKV("Customer si cambia: ", order.Customer)
+
+	setCity(&order, "Buenos Aires")
+	PrintKV("Ciudad (map si cambia)", order.Meta["city"])
+
 }
