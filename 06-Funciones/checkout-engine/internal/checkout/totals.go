@@ -23,3 +23,23 @@ func RemoveItem(o *Order, sku string) bool {
 
 	return false
 }
+
+func CalcLineTotal(item Item) Money {
+	return item.Price * Money(item.Qty)
+}
+
+func CalcSubtotal(order Order) Money {
+	var sum Money
+	for _, item := range order.Items {
+		sum += CalcLineTotal(item) // sum = sum + CalcLineTotal(item)
+	}
+	return sum
+}
+
+func CalcTotalQty(order Order) int {
+	total := 0
+	for _, item := range order.Items {
+		total += item.Qty
+	}
+	return total
+}
