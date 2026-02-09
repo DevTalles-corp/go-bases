@@ -11,5 +11,5 @@ func PrintDivider() {
 }
 
 func PrintKV(key string, value any) {
-	fmt.Printf("%-12s : %v", key, value)
+	fmt.Printf("%-12s : %v\n", key, value)
 }
