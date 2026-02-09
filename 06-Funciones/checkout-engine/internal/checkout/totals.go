@@ -43,3 +43,7 @@ func CalcTotalQty(order Order) int {
 	}
 	return total
 }
+
+func AddItems(order *Order, items ...Item) {
+	order.Items = append(order.Items, items...)
+}

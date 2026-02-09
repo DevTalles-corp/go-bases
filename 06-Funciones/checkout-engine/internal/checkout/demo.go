@@ -34,4 +34,14 @@ func RunDemo() {
 	setCity(&order, "Buenos Aires")
 	PrintKV("Ciudad (map si cambia)", order.Meta["city"])
 
+	PrintDivider()
+	items := []Item{
+		{SKU: "MS-003", Name: "Mouse", Price: 1200, Qty: 1},
+		{SKU: "HD-005", Name: "HDMI", Price: 300, Qty: 2},
+	}
+
+	AddItems(&order, items...)
+	PrintKV("Cantidad total: ", CalcTotalQty(order))
+	PrintKV("Items: ", order.Items)
+
 }
