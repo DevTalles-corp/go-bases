@@ -44,4 +44,15 @@ func RunDemo() {
 	PrintKV("Cantidad total: ", CalcTotalQty(order))
 	PrintKV("Items: ", order.Items)
 
+	PrintDivider()
+
+	findItem, extraValueFind := FindItem(order, "MS-003")
+	PrintKV2("Item encontrado", findItem, extraValueFind)
+	getMeta, extraGetMeta := GetMeta(order, "city")
+	PrintKV2("Metadato encontrado", getMeta, extraGetMeta)
+	IndexOfItemValue, IndexOfItemExtra := IndexOfItem(order, "HD-008")
+	PrintKV2("Index encontrado", IndexOfItemValue, IndexOfItemExtra)
+
+	PrintDivider()
+
 }
