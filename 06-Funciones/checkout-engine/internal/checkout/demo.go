@@ -8,6 +8,9 @@ func RunDemo() {
 	AddItem(&order, Item{SKU: "MB-024", Name: "Monitor", Price: 15000, Qty: 2})
 	AddItem(&order, Item{SKU: "MB-054", Name: "CPU", Price: 45000, Qty: 3})
 
+	//Probando validador
+	PrintKV("VALIDADOR: ", ValidateOrder(order))
+
 	PrintKV("OrderID", order.ID)
 	PrintKV("Customer", order.Customer)
 	PrintKV("Items", len(order.Items))
@@ -54,5 +57,8 @@ func RunDemo() {
 	PrintKV2("Index encontrado", IndexOfItemValue, IndexOfItemExtra)
 
 	PrintDivider()
+
+	couponValue, couponError := ParseCoupon("SAVE30")
+	PrintKV2("Probando cupón: ", couponValue, couponError)
 
 }
