@@ -77,3 +77,15 @@ func IndexOfItem(order Order, sku string) (int, bool) {
 
 	return -1, false
 } //MS-003 -> 4 true
+
+func Compute(order Order) (t Totals, err error) {
+	if err = ValidateOrder(order); err != nil {
+		return Totals{}, err
+	}
+
+	t.Subtotal = CalcSubtotal(order)
+	t.Total = t.Subtotal - t.Discount + t.Tax + t.Shipping
+
+	return t, nil // return
+
+}

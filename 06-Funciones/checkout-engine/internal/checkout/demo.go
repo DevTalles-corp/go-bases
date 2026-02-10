@@ -61,4 +61,10 @@ func RunDemo() {
 	couponValue, couponError := ParseCoupon("SAVE30")
 	PrintKV2("Probando cupón: ", couponValue, couponError)
 
+	PrintDivider()
+	// computeValue, computeError := Compute(order)
+	_, computeError := Compute(order)
+	// PrintKV2("Computar valores por nombre (TOTALES): ", computeValue, computeError)
+	PrintKV("TOTALES: ", computeError)
+
 }
