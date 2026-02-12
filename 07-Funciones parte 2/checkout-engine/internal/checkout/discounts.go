@@ -1,5 +1,7 @@
 package checkout
 
+type DiscountFn func(Order) Money
+
 type Coupon struct {
 	Code string
 	Kind string
@@ -26,4 +28,20 @@ func joinCoupons(coupons []string) string {
 	}
 
 	return out
+}
+
+func FlatDiscount(amount Money) DiscountFn {
+	return func(order Order) Money {
+		return amount
+	}
+}
+
+func ThresholdPercentDiscount(min Money, percent int) DiscountFn {
+	return func(order Order) Money {
+		sub := CalcSubtotal(order)
+		if sub < min {
+			return 0
+		}
+		return sub * Money(percent) / 100
+	}
 }

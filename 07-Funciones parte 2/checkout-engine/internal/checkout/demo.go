@@ -62,9 +62,15 @@ func RunDemo() {
 	PrintKV2("Probando cupón: ", couponValue, couponError)
 
 	PrintDivider()
-	// computeValue, computeError := Compute(order)
-	_, computeError := Compute(order)
-	// PrintKV2("Computar valores por nombre (TOTALES): ", computeValue, computeError)
-	PrintKV("TOTALES: ", computeError)
+	computeValue, computeError := Compute(order)
+	// _, computeError := Compute(order)
+	PrintKV2("Computar valores por nombre (TOTALES): ", computeValue, computeError)
+	// PrintKV("TOTALES: ", computeError)
+
+	PrintDivider()
+
+	PrintKV("Descuento: ", FlatDiscount(200)(order))
+	th := ThresholdPercentDiscount(2000, 20)
+	PrintKV("Descuento %: ", th(order))
 
 }
