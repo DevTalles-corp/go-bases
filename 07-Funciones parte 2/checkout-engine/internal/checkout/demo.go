@@ -73,4 +73,16 @@ func RunDemo() {
 	th := ThresholdPercentDiscount(2000, 20)
 	PrintKV("Descuento %: ", th(order))
 
+	PrintDivider()
+
+	cityDiscount := func(order Order) Money {
+		city, _ := GetMeta(order, "city")
+		if city == "Buenos Aires" {
+			return 200
+		}
+		return 0
+	}
+
+	PrintKV("Descuento especial por ciudad: ", cityDiscount(order))
+
 }
