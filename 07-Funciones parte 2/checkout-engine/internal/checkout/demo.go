@@ -6,9 +6,9 @@ func RunDemo() {
 	PrintHeader("Hola Checkout Engine :)")
 
 	order := NewOrder("ORDER-001", "RICARDO")
-	AddItem(&order, Item{SKU: "KB-001", Name: "Teclado", Price: 3500, Qty: 1})
-	AddItem(&order, Item{SKU: "MB-024", Name: "Monitor", Price: 15000, Qty: 2})
-	AddItem(&order, Item{SKU: "MB-054", Name: "CPU", Price: 45000, Qty: 3})
+	order.AddItem(Item{SKU: "MB-024", Name: "Monitor", Price: 15000, Qty: 2})
+	order.AddItem(Item{SKU: "KB-001", Name: "Teclado", Price: 3500, Qty: 1})
+	order.AddItem(Item{SKU: "MB-054", Name: "CPU", Price: 45000, Qty: 3})
 
 	//Probando validador
 	PrintKV("VALIDADOR: ", ValidateOrder(order))
@@ -17,13 +17,13 @@ func RunDemo() {
 	PrintKV("Customer", order.Customer)
 	PrintKV("Items", len(order.Items))
 
-	remove := RemoveItem(&order, "KB-001")
+	remove := order.RemoveItem("KB-001")
 	PrintKV("Removed KB-001: ", remove)
 
 	PrintDivider()
 
-	sub := CalcSubtotal(order)
-	qty := CalcTotalQty(order)
+	sub := order.CalcSubtotal()
+	qty := order.CalcTotalQty()
 
 	PrintKV("Subtotal: ", sub)
 	PrintKV("Cantidad: ", qty)
@@ -48,13 +48,13 @@ func RunDemo() {
 		{SKU: "HD-005", Name: "HDMI", Price: 300, Qty: 2},
 	}
 
-	AddItems(&order, items...)
-	PrintKV("Cantidad total: ", CalcTotalQty(order))
+	order.AddItems(items...)
+	PrintKV("Cantidad total: ", order.CalcTotalQty())
 	PrintKV("Items: ", order.Items)
 
 	PrintDivider()
 
-	findItem, extraValueFind := FindItem(order, "MS-003")
+	findItem, extraValueFind := order.FindItem("MS-003")
 	PrintKV2("Item encontrado", findItem, extraValueFind)
 	getMeta, extraGetMeta := GetMeta(order, "city")
 	PrintKV2("Metadato encontrado", getMeta, extraGetMeta)

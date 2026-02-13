@@ -38,7 +38,7 @@ func FlatDiscount(amount Money) DiscountFn {
 
 func ThresholdPercentDiscount(min Money, percent int) DiscountFn {
 	return func(order Order) Money {
-		sub := CalcSubtotal(order)
+		sub := order.CalcSubtotal()
 		if sub < min {
 			return 0
 		}
@@ -48,7 +48,7 @@ func ThresholdPercentDiscount(min Money, percent int) DiscountFn {
 
 func MakeSKUDiscount(sku string, amount Money) DiscountFn {
 	return func(order Order) Money {
-		_, ok := FindItem(order, sku)
+		_, ok := order.FindItem(sku)
 		if !ok {
 			return 0
 		}

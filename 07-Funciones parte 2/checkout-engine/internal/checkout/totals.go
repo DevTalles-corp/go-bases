@@ -9,11 +9,12 @@ func NewOrder(id, customer string) Order {
 	}
 }
 
-func AddItem(o *Order, item Item) {
+// Método para agregar Item a la orden
+func (o *Order) AddItem(item Item) {
 	o.Items = append(o.Items, item)
 }
 
-func RemoveItem(o *Order, sku string) bool {
+func (o *Order) RemoveItem(sku string) bool {
 	for i := range o.Items {
 		if o.Items[i].SKU == sku { // "b" = "b"
 			o.Items = append(o.Items[:i], o.Items[i+1:]...) // ["a", "b", "c", "d"]
@@ -28,7 +29,7 @@ func CalcLineTotal(item Item) Money {
 	return item.Price * Money(item.Qty)
 }
 
-func CalcSubtotal(order Order) Money {
+func (order Order) CalcSubtotal() Money {
 	var sum Money
 	for _, item := range order.Items {
 		sum += CalcLineTotal(item) // sum = sum + CalcLineTotal(item)
@@ -36,7 +37,7 @@ func CalcSubtotal(order Order) Money {
 	return sum
 }
 
-func CalcTotalQty(order Order) int {
+func (order Order) CalcTotalQty() int {
 	total := 0
 	for _, item := range order.Items {
 		total += item.Qty
@@ -44,11 +45,11 @@ func CalcTotalQty(order Order) int {
 	return total
 }
 
-func AddItems(order *Order, items ...Item) {
+func (order *Order) AddItems(items ...Item) {
 	order.Items = append(order.Items, items...)
 }
 
-func FindItem(order Order, sku string) (Item, bool) {
+func (order Order) FindItem(sku string) (Item, bool) {
 	for _, item := range order.Items {
 		if item.SKU == sku {
 			return item, true
@@ -83,7 +84,7 @@ func ApplyDiscounts(order Order, fns ...DiscountFn) Money {
 	for _, fn := range fns {
 		discount += fn(order)
 	}
-	sub := CalcSubtotal(order)
+	sub := order.CalcSubtotal()
 	if discount > sub {
 		return sub
 	}
@@ -97,7 +98,7 @@ func Compute(order Order, tax TaxFn, ship ShippingFn, discounts ...DiscountFn) (
 		return Totals{}, err
 	}
 
-	t.Subtotal = CalcSubtotal(order)
+	t.Subtotal = order.CalcSubtotal()
 	t.Discount = ApplyDiscounts(order, discounts...)
 	t.Tax = tax(order)
 	t.Shipping = ship(order)
