@@ -64,9 +64,9 @@ func RunDemo() {
 	PrintKV2("Probando cupón: ", couponValue, couponError)
 
 	PrintDivider()
-	computeValue, computeError := Compute(order)
+	// computeValue, computeError := Compute(order)
 	// _, computeError := Compute(order)
-	PrintKV2("Computar valores por nombre (TOTALES): ", computeValue, computeError)
+	// PrintKV2("Computar valores por nombre (TOTALES): ", computeValue, computeError)
 	// PrintKV("TOTALES: ", computeError)
 
 	PrintDivider()
@@ -95,4 +95,8 @@ func RunDemo() {
 	fmt.Println(discountKeyboard(order))
 	fmt.Println(discountMouse(order))
 
+	PrintDivider()
+
+	computeValue, computeError := Compute(order, NoTax, FreeShipping, FlatDiscount(5000), ThresholdPercentDiscount(2000, 10))
+	PrintKV2("Computar valores por nombre (TOTALES): ", computeValue, computeError)
 }

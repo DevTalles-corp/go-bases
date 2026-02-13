@@ -78,13 +78,29 @@ func IndexOfItem(order Order, sku string) (int, bool) {
 	return -1, false
 } //MS-003 -> 4 true
 
-func Compute(order Order) (t Totals, err error) {
+func ApplyDiscounts(order Order, fns ...DiscountFn) Money {
+	var discount Money
+	for _, fn := range fns {
+		discount += fn(order)
+	}
+	sub := CalcSubtotal(order)
+	if discount > sub {
+		return sub
+	}
+
+	return discount
+}
+
+func Compute(order Order, tax TaxFn, ship ShippingFn, discounts ...DiscountFn) (t Totals, err error) {
 	defer Track("Compute")()
 	if err = ValidateOrder(order); err != nil {
 		return Totals{}, err
 	}
 
 	t.Subtotal = CalcSubtotal(order)
+	t.Discount = ApplyDiscounts(order, discounts...)
+	t.Tax = tax(order)
+	t.Shipping = ship(order)
 	t.Total = t.Subtotal - t.Discount + t.Tax + t.Shipping
 
 	return t, nil // return
