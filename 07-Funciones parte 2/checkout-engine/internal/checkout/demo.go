@@ -6,9 +6,9 @@ func RunDemo() {
 	PrintHeader("Hola Checkout Engine :)")
 
 	order := NewOrder("ORDER-001", "RICARDO")
-	AddItem(&order, Item{SKU: "KB-001", Name: "Teclado", Price: 3500, Qty: 1})
-	AddItem(&order, Item{SKU: "MB-024", Name: "Monitor", Price: 15000, Qty: 2})
-	AddItem(&order, Item{SKU: "MB-054", Name: "CPU", Price: 45000, Qty: 3})
+	order.AddItem(Item{SKU: "KB-001", Name: "Teclado", Price: 3500, Qty: 1})
+	order.AddItem(Item{SKU: "MB-024", Name: "Monitor", Price: 15000, Qty: 2})
+	order.AddItem(Item{SKU: "MB-054", Name: "CPU", Price: 45000, Qty: 3})
 
 	//Probando validador
 	PrintKV("VALIDADOR: ", ValidateOrder(order))

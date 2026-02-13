@@ -9,7 +9,7 @@ func NewOrder(id, customer string) Order {
 	}
 }
 
-func AddItem(o *Order, item Item) {
+func (o *Order) AddItem(item Item) {
 	o.Items = append(o.Items, item)
 }
 
