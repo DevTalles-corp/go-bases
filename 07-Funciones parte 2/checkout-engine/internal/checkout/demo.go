@@ -36,8 +36,11 @@ func RunDemo() {
 	ChangeCustomerByPointer(&order, "Andrei Cuéllar")
 	PrintKV("Customer si cambia: ", order.Customer)
 
-	setCity(&order, "Buenos Aires")
+	setCity(&order, "NL")
 	PrintKV("Ciudad (map si cambia)", order.Meta["city"])
+
+	//Setear la zona
+	setZone(&order, "NATIONAL")
 
 	PrintDivider()
 	items := []Item{
@@ -97,6 +100,12 @@ func RunDemo() {
 
 	PrintDivider()
 
-	computeValue, computeError := Compute(order, IVA16, FreeShipping, FlatDiscount(5000), ThresholdPercentDiscount(2000, 10))
+	state, _ := GetMeta(order, "city")
+	zone, _ := GetMeta(order, "zone")
+
+	taxFn := NewTaxByState(state)
+	shipFn := NewShippingByZone(zone)
+
+	computeValue, computeError := Compute(order, taxFn, shipFn, FlatDiscount(5000), ThresholdPercentDiscount(2000, 10))
 	PrintKV2("Computar valores por nombre (TOTALES): ", computeValue, computeError)
 }
