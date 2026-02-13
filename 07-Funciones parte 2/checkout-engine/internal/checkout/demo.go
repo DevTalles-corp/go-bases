@@ -1,5 +1,7 @@
 package checkout
 
+import "fmt"
+
 func RunDemo() {
 	PrintHeader("Hola Checkout Engine :)")
 
@@ -84,5 +86,13 @@ func RunDemo() {
 	}
 
 	PrintKV("Descuento especial por ciudad: ", cityDiscount(order))
+
+	PrintDivider()
+
+	discountKeyboard := MakeSKUDiscount("TECHProduct", 500)
+	discountMouse := MakeSKUDiscount("HD-005", 150)
+
+	fmt.Println(discountKeyboard(order))
+	fmt.Println(discountMouse(order))
 
 }

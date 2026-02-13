@@ -45,3 +45,14 @@ func ThresholdPercentDiscount(min Money, percent int) DiscountFn {
 		return sub * Money(percent) / 100
 	}
 }
+
+func MakeSKUDiscount(sku string, amount Money) DiscountFn {
+	return func(order Order) Money {
+		_, ok := FindItem(order, sku)
+		if !ok {
+			return 0
+		}
+
+		return amount
+	}
+}
