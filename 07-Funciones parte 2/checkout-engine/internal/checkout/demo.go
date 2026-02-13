@@ -97,6 +97,6 @@ func RunDemo() {
 
 	PrintDivider()
 
-	computeValue, computeError := Compute(order, NoTax, FreeShipping, FlatDiscount(5000), ThresholdPercentDiscount(2000, 10))
+	computeValue, computeError := Compute(order, IVA16, FreeShipping, FlatDiscount(5000), ThresholdPercentDiscount(2000, 10))
 	PrintKV2("Computar valores por nombre (TOTALES): ", computeValue, computeError)
 }
