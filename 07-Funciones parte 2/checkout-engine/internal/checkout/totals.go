@@ -92,14 +92,20 @@ func ApplyDiscounts(order Order, fns ...DiscountFn) Money {
 	return discount
 }
 
-func Compute(order Order, tax TaxFn, ship ShippingFn, discounts ...DiscountFn) (t Totals, err error) {
+func Compute(order Order, bundle Money, tax TaxFn, ship ShippingFn, discounts ...DiscountFn) (t Totals, err error) {
 	defer Track("Compute")()
 	if err = ValidateOrder(order); err != nil {
 		return Totals{}, err
 	}
 
 	t.Subtotal = order.CalcSubtotal()
-	t.Discount = ApplyDiscounts(order, discounts...)
+
+	if bundle > 0 {
+		t.Discount = bundle
+	} else {
+		t.Discount = ApplyDiscounts(order, discounts...)
+	}
+
 	t.Tax = tax(order)
 	t.Shipping = ship(order)
 	t.Total = t.Subtotal - t.Discount + t.Tax + t.Shipping

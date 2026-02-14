@@ -8,6 +8,11 @@ type Coupon struct {
 	Val  int
 }
 
+type CompositeDiscount struct {
+	Name string
+	Fns  []DiscountFn
+}
+
 func ApplyCouponCodes(order *Order, codes ...string) {
 	if order.Meta == nil {
 		order.Meta = map[string]string{}
@@ -55,4 +60,16 @@ func MakeSKUDiscount(sku string, amount Money) DiscountFn {
 
 		return amount
 	}
+}
+
+func ApplyDiscountsRecursive(order Order, fns []DiscountFn) Money {
+	if len(fns) == 0 {
+		return 0
+	}
+
+	return fns[0](order) + ApplyDiscountsRecursive(order, fns[1:]) // "FREESHIPPING", "CITYDISCOUNT", "HOTSALE123"
+}
+
+func (composite CompositeDiscount) Apply(order Order) Money {
+	return ApplyDiscountsRecursive(order, composite.Fns)
 }
