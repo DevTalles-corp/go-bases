@@ -8,4 +8,7 @@ func main() {
 
 	fmt.Println("Email: ", email)
 	fmt.Println("Money: ", amount)
+
+	ev := NewPaymentDueEvent("evt_001", email, amount)
+	fmt.Println(ev.Type.String(), ev.ID, ev.Amount)
 }
