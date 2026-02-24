@@ -9,9 +9,18 @@ type EmailSenderFake struct {
 	Sent int
 }
 
+type Sender interface {
+	Send(ctx context.Context, to Email, body string) error
+}
+
 // Service
+// type Service struct {
+// 	sender *EmailSenderFake // Acoplamiento
+// }
+
+// Nuevo service con interfaz
 type Service struct {
-	sender *EmailSenderFake // Acoplamiento
+	sender Sender
 }
 
 func (sender *EmailSenderFake) Send(ctx context.Context, to Email, body string) error {
@@ -22,7 +31,7 @@ func (sender *EmailSenderFake) Send(ctx context.Context, to Email, body string) 
 	return nil
 }
 
-func NewService(sender *EmailSenderFake) *Service {
+func NewService(sender Sender) *Service {
 	return &Service{sender: sender}
 }
 
