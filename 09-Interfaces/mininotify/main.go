@@ -31,4 +31,13 @@ func main() {
 	svc := NewService(sender)
 	_ = svc.NotifyPaymentDue(context.Background(), ev)
 
+	// Nil trap
+	senderNil := returnsTypedNil()
+	fmt.Println("senderNil == nil?", senderNil == nil)
+
+}
+
+func returnsTypedNil() Sender {
+	var s *EmailSenderFake = nil
+	return s
 }
