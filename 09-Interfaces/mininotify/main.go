@@ -16,13 +16,19 @@ func main() {
 	fmt.Println(ev.Type.String(), ev.ID, ev.Amount)
 
 	// Probando Send
-	sender := &EmailSenderFake{}
-	svc := NewService(sender)
+	// sender := &EmailSenderFake{}
+	// svc := NewService(sender)
 	// body := "Pago pendiente: " + ev.Amount.String()
 
+	// _ = svc.NotifyPaymentDue(context.Background(), ev)
+	// _ = send.Send(context.Background(), ev.Email, body)
+	// _ = send.Send(context.Background(), ev.Email, body)
+	// _ = send.Send(context.Background(), ev.Email, body)
+	// _ = send.Send(context.Background(), ev.Email, body)
+
+	base := &EmailSenderFake{}
+	sender := LoggedSender{Sender: base, Log: ConsoleLogger{}}
+	svc := NewService(sender)
 	_ = svc.NotifyPaymentDue(context.Background(), ev)
-	// _ = send.Send(context.Background(), ev.Email, body)
-	// _ = send.Send(context.Background(), ev.Email, body)
-	// _ = send.Send(context.Background(), ev.Email, body)
-	// _ = send.Send(context.Background(), ev.Email, body)
+
 }
