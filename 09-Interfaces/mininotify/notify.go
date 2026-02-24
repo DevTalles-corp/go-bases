@@ -10,6 +10,7 @@ type EmailSenderFake struct {
 }
 
 type Sender interface {
+	Channel() string
 	Send(ctx context.Context, to Email, body string) error
 }
 
@@ -31,11 +32,15 @@ func (sender *EmailSenderFake) Send(ctx context.Context, to Email, body string) 
 	return nil
 }
 
+func (sender *EmailSenderFake) Channel() string {
+	return "email_fake"
+}
+
 func NewService(sender Sender) *Service {
 	return &Service{sender: sender}
 }
 
 func (service *Service) NotifyPaymentDue(ctx context.Context, event Event) error {
-	body := fmt.Sprintf("Tienes un pago pendiente de %s (event=%s)", event.Amount, event.ID)
+	body := fmt.Sprintf("[%s] Tienes un pago pendiente de %s (event=%s)", service.sender.Channel(), event.Amount, event.ID)
 	return service.sender.Send(ctx, event.Email, body)
 }
