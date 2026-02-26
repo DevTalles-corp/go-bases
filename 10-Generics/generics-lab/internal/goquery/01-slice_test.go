@@ -37,3 +37,17 @@ func TestMapToNames(test *testing.T) {
 	}
 
 }
+
+func TestExplicitTypesArgsExample(test *testing.T) {
+	users := []User{{1, "Ana"}, {2, "Beto"}, {3, "Fernando"}}
+
+	got := Map[User, string](users, func(user User) string { return user.Name })
+
+	want := []string{"Ana", "Beto", "Fernando"}
+
+	for i := range want {
+		if got[i] != want[i] {
+			test.Fatalf("got[%d] = %v want=%v", i, got[i], want[i])
+		}
+	}
+}
