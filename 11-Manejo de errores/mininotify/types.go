@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"regexp"
 	"strings"
@@ -13,6 +14,11 @@ type Money int64
 
 // Tipo EvenType
 type EvenType uint8 //0 a 255
+
+var (
+	ErrInvalidEmail  = errors.New("Email inválido")
+	ErrNegativeMoney = errors.New("El monto de cobro debe ser mayor a cero (0)")
+)
 
 type Event struct {
 	ID     string
@@ -33,14 +39,15 @@ var emailRe = regexp.MustCompile(`^[^\s@]+@[^\s@]+\.[^\s@]+$`)
 func NewEmail(v string) (Email, error) {
 	v = strings.TrimSpace(strings.ToLower(v))
 	if !emailRe.MatchString(v) {
-		return "", fmt.Errorf("email inválido: %q", v)
+		return "", fmt.Errorf("%w: %q", ErrInvalidEmail, v)
 	}
 	return Email(v), nil
 }
 
 func NewMoneyFromCents(cents int64) (Money, error) {
 	if cents < 0 {
-		return 0, fmt.Errorf("money no puede ser negativo")
+		return 0, fmt.Errorf("%w: %d", ErrNegativeMoney, cents)
+		// return 0, errors.New("Monto no puede ser menor a cero(0)")
 	}
 	return Money(cents), nil
 }
