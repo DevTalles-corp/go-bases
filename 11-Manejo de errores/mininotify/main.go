@@ -25,6 +25,10 @@ func main() {
 	fmt.Println("Email: ", email)
 	fmt.Println("Money: ", amount)
 
+	if err := WriteReport("report.txt", "Reporte de la semana"); err != nil {
+		fmt.Println("Al crear el reporte. Error: ", err)
+	}
+
 }
 
 func returnsTypedNil() Sender {
