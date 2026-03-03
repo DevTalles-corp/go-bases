@@ -27,3 +27,13 @@ func WriteReport(path string, content string) (err error) {
 	return nil
 
 }
+
+func ShadowingError() error {
+	var err error //nil
+
+	if _, err := os.Stat("no-existe.txt"); err != nil {
+		_ = err
+	}
+
+	return err
+}

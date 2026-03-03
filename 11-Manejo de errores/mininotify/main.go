@@ -29,6 +29,12 @@ func main() {
 		fmt.Println("Al crear el reporte. Error: ", err)
 	}
 
+	if err := ShadowingError(); err != nil {
+		fmt.Println("Shadowing error: ", err)
+	} else {
+		fmt.Println("ShadowingError retorno nil (TODO BIEN)")
+	}
+
 }
 
 func returnsTypedNil() Sender {
