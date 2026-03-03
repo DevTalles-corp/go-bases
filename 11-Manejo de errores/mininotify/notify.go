@@ -2,8 +2,11 @@ package main
 
 import (
 	"context"
+	"errors"
 	"fmt"
 )
+
+var ErrSendFailed = errors.New("Fallo el envío.")
 
 type EmailSenderFake struct {
 	Sent int
@@ -54,7 +57,13 @@ func NewService(sender Sender) *Service {
 
 func (service *Service) NotifyPaymentDue(ctx context.Context, event Event) error {
 	body := fmt.Sprintf("[%s] Tienes un pago pendiente de %s (event=%s)", service.sender.Channel(), event.Amount, event.ID)
-	return service.sender.Send(ctx, event.Email, body)
+
+	if err := service.sender.Send(ctx, event.Email, body); err != nil {
+		return fmt.Errorf("%w via=%s event=%s: %w", ErrSendFailed, service.sender.Channel(), event.ID, err)
+	}
+
+	return nil
+
 }
 
 // Métodos para Logged

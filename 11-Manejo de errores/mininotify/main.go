@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	email, err := NewEmail("ricardo")
+	email, err := NewEmail("ricardo@example.com")
 	if err != nil {
 		if errors.Is(err, ErrInvalidEmail) {
 			fmt.Println("Email inválido. Corrige el formato: ", err)
@@ -16,7 +16,7 @@ func main() {
 		return
 	}
 
-	amount, err := NewMoneyFromCents(-45000)
+	amount, err := NewMoneyFromCents(45000)
 	if err != nil {
 		fmt.Println("ERROR al crear el monto: ", err)
 		return
