@@ -35,6 +35,12 @@ func main() {
 		fmt.Println("ShadowingError retorno nil (TODO BIEN)")
 	}
 
+	if err := RunSafely(func() {
+		_ = MustTemplate("payment_due")
+	}); err != nil {
+		fmt.Println("SAFE ERROR: ", err)
+	}
+
 }
 
 func returnsTypedNil() Sender {
