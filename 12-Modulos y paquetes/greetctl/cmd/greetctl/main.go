@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	msg := greet.Hello("Fernando")
+	msg := greet.Hello("      Fernando       ")
 	fmt.Println("Proyecto listo desde CMD!")
 	fmt.Println(msg)
 }
