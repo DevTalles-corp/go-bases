@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 
 	"github.com/ricardocuellar/greetctl/internal/logx"
@@ -8,7 +9,10 @@ import (
 )
 
 func main() {
-	msg := gr.Hello("      Fernando       ")
+	name := flag.String("name", "mundo", "Nombre a saludar")
+	flag.Parse()
+
+	msg := gr.Hello(*name)
 	fmt.Println("Proyecto listo desde CMD!")
 	fmt.Println(msg)
 
